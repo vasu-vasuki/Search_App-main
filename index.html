@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Search Bar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .search-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    input {
+      width: 300px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .suggestions {
+      list-style-type: none;
+      padding: 0;
+      width: 300px;
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    .suggestions li {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .suggestions li:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Fast Finder</h1>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search for a country or capital..." onkeyup="filterSuggestions()">
+      <ul id="suggestions-list" class="suggestions"></ul>
+    </div>
+  </div>
+
+  <script>
+    const countriesData = [
+      { country: "United States", capital: "Washington D.C." },
+      { country: "Canada", capital: "Ottawa" },
+      { country: "Germany", capital: "Berlin" },
+      { country: "France", capital: "Paris" },
+      { country: "Japan", capital: "Tokyo" },
+      { country: "Australia", capital: "Canberra" }
+      // More countries can be added here...
+    ];
+
+    function filterSuggestions() {
+      const input = document.getElementById('search-input').value.toLowerCase();
+      const suggestionsList = document.getElementById('suggestions-list');
+
+      suggestionsList.innerHTML = '';  // Clear previous suggestions
+
+      if (input.length > 0) {
+        const filteredSuggestions = countriesData.filter(country => 
+          country.country.toLowerCase().includes(input) || 
+          country.capital.toLowerCase().includes(input)
+        );
+
+        filteredSuggestions.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.country} - ${item.capital}`;
+          suggestionsList.appendChild(li);
+        });
+      }
+    }
+  </script>
+  
+</body>
+</html>
